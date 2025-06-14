@@ -50,13 +50,12 @@ import BlogSection from "../components/BlogSection.astro";
           <span id="greeting-location"></span>
         </span>
         <div id="socials"></div>
-
+        <script src="/scripts/greeting.js" defer></script>
         <script src="/scripts/files.js" defer></script>
         <script src="/scripts/socials.js" defer></script>
       </div>
       <div id="main-content" style="padding: 2px 0px 28px 24px;">
         <BlogSection />
-        <script src="/scripts/greeting.js" defer></script>
       </div>
       <div class="custom-tooltip-container">
         <button class="custom-tooltip-btn">Need Help?</button>
@@ -66,7 +65,11 @@ import BlogSection from "../components/BlogSection.astro";
         </div>
       </div>
     </div>
+    <div id="show-post">
 
+    </div> 
+    
+    <script src="/scripts/posts.js" defer></script>
     <div id="tile-overlay"></div>
   </body>
 </html>

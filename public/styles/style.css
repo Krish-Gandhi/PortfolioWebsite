@@ -367,6 +367,22 @@ p {
   z-index: 2000;
 }
 
+#show-post{
+  display: none;
+}
+
+#show-post.show{
+  display: block;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: #000000b9;
+  z-index: 2001;
+  overflow-y: auto;
+}
+
 @media (max-width: 1600px) {
   #hello-text {
     display: none;
