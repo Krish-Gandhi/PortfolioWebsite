@@ -1,0 +1,72 @@
+---
+import BlogSection from "../components/BlogSection.astro";
+---
+
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Krish Gandhi</title>
+
+    <!-- Use absolute paths for public assets -->
+    <link href="/styles/style.css" rel="stylesheet" />
+
+    <!-- External fonts and icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="cli-container">
+      <p><span id="terminal-text"></span><span id="caret"></span></p>
+      <script src="/scripts/terminal.js" defer></script>
+    </div>
+
+    <div id="ui-container" style="display: none;">
+      <div id="hero">
+        <div class="profile-pic">
+          <img src="/images/Krish_Gandhi.jpg" alt="Krish Gandhi" />
+        </div>
+        <div id="demographic">
+          <h1>Krish Gandhi</h1>
+          <h3>Software Engineer</h3>
+          <h2 id="wide-loc">Palatine, IL, USA</h2>
+          <h2 id="thin-loc">IL, USA</h2>
+        </div>
+        <div id="nav">
+          <p id="hello-text">Hello, I'm Krish Gandhi! As of Fall 2026, I am a senior at the University of Illinois Urbana-Champaign, double majoring in Computer Engineering and Statistics. I made this site to display my projects and skills. I am currently seeking internship and full-time opportunities for Summer 2026 and beyond. If you are interested, don't hesitate to reach out!</p>
+          <p id="mid-hello">Hello, I'm Krish Gandhi! I am currently seeking internship and full-time opportunities for Summer 2026 and beyond. If you are interested, don't hesitate to reach out!</p>
+        </div>
+        <div id="files"></div>
+        <span class="greeting-metadata">
+          <span id="greeting-time"></span>
+          <span id="greeting-location"></span>
+        </span>
+        <div id="socials"></div>
+
+        <script src="/scripts/files.js" defer></script>
+        <script src="/scripts/socials.js" defer></script>
+      </div>
+      <div id="main-content" style="padding: 2px 0px 28px 24px;">
+        <BlogSection />
+        <script src="/scripts/greeting.js" defer></script>
+      </div>
+      <div class="custom-tooltip-container">
+        <button class="custom-tooltip-btn">Need Help?</button>
+        <div class="custom-tooltip-content">
+          <span class="custom-tooltip-arrow"></span>
+          <p class="custom-tooltip-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec lacinia nibh. Phasellus non ante lacus. Sed bibendum varius malesuada. Quisque at neque mi. Maecenas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tile-overlay"></div>
+  </body>
+</html>

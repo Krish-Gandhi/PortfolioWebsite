@@ -1,0 +1,687 @@
+html {
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  background-color: #000000;
+}
+
+body {
+  background-color: black;
+  color: #00ff00;
+  font-family: monospace;
+  padding: 1rem;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+#terminal-text {
+  display: inline;
+  white-space: pre-wrap;
+  line-height: 1.2em;
+}
+
+#caret {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1em;
+  background-color: #00ff00;
+  animation: blink 1s steps(2, start) infinite;
+  vertical-align: text-bottom; /* ← Fixes position on newline */
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+#tile-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.tile {
+  width: 40px;
+  height: 40px;
+  background-color: #00ff00;
+  animation: pop 0.3s ease-in forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInTile {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.2); opacity: 0; }
+}
+
+/* this part is the UI version */
+:root{
+  --sidebar-width: 12vw;
+  --teal: #00b982;
+  --blue: #0041b9;
+  --red: #b91600;
+  --gray: #707070;
+  --white: #ffffff;
+  --black: #000000;
+  --background: #0e0e0e;
+  --charcoal: #1a1a1a;
+  --dark-gray: #2b2b2b;
+  --half-black: rgb(0,0,0 / 50%);
+}
+
+#ui-container {
+  background-color: var(--black);
+  color: var(--teal);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; 
+  padding-left: 1.5vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-pic {
+  width: calc(var(--sidebar-width)*.65);
+  height: calc(var(--sidebar-width)*.65);
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 1rem auto;
+  border: 9px solid var(--black);
+  box-shadow: 0 0 12px var(--blue);
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#hero{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;         
+  width: var(--sidebar-width);          
+  background-color: var(--background);        
+  padding: 2rem 1rem;
+  box-shadow: 2px 0 12px var(--gray);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+#hero h1,
+#hero h2,
+#hero h3{
+  color: var(--white);
+  text-align: center;
+  margin: 0.3rem 0;
+}
+
+#hero h2{
+  font-size: 18px;
+}
+
+#hero h3{
+  font-style: italic;
+  font-size: 14px;
+}
+
+#demographic{
+  border-bottom: 1px solid var(--gray);
+}
+
+#thin-loc{
+  display: none;
+}
+
+#hello-text{
+  text-align: center;
+}
+
+#mid-hello{
+  display: none;
+}
+
+#files {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #121212;
+  color: var(--white);
+  border: 1px solid var(--teal);
+  border-radius: 10px;
+  padding: .75rem 1rem;
+  margin: 0px 4px; 
+  width: 90%;
+  max-width: 250px;
+  box-shadow: 0 0 10px rgba(0, 185, 130, 0.4);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.file-card i {
+  font-size: 1.6rem;
+  color: var(--teal);
+}
+
+.file-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.small-file-text{
+  display: none;
+}
+
+.file-text span {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.file-updated {
+  font-size: 0.75rem;
+  color: var(--teal);
+}
+
+.file-card:hover {
+  transform: scale(1.035);
+  box-shadow: 0 0 14px var(--teal);
+}
+
+#socials {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: var(--white);
+  padding: 1rem 0 2.5rem 0;
+}
+
+#socials p {
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--gray);
+}
+
+#socials a {
+  color: var(--white);
+  font-size: calc(var(--sidebar-width) / 6);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#socials a:hover {
+  color: var(--teal);
+}
+
+.previews-container{
+  display: flex; 
+  overflow-x: auto; 
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.previews-container::-webkit-scrollbar {
+  height: 10px;
+  width: 100%;
+}
+
+.previews-container::-webkit-scrollbar-track {
+  border-radius: 8px;
+}
+
+.previews-container::-webkit-scrollbar-thumb {
+  background: var(--blue);
+  border-radius: 8px;
+  border: 2px solid #1e1e1e;
+}
+
+.previews-container::-webkit-scrollbar-thumb:hover {
+  background: var(--white);
+}
+
+.preview {
+  position: relative;
+  color: var(--white);
+  flex: 0 0 300px;
+  border: 1px solid var(--white); 
+  border-radius: 12px;
+  padding: 0.5rem 1rem 0.5rem; 
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--white);
+  overflow: hidden;
+  background-color: hsla(240, 15%, 9%, 1);
+  transition: background-color 1s ease;
+  z-index: 0;
+}
+
+.preview::before {
+  content: "";
+  position: absolute;
+  top: 0; 
+  right: 0; 
+  bottom: 0; 
+  left: 0;
+  background-image: radial-gradient(
+      at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%),
+    radial-gradient(at 0% 64%, hsl(223.18deg 93% 56%) 0px, transparent 85%),
+    radial-gradient(at 41% 94%, hsla(197.13deg 54.06% 19.58%) 0px, transparent 85%),
+    radial-gradient(at 100% 99%, hsla(151.7deg 52.54% 58.7%) 0px, transparent 85%);
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.preview:hover::before {
+  opacity: 1;
+}
+
+.preview img{
+  display: block;
+  margin: 0 auto;
+  max-width: 300px;
+  max-height: 175px;
+  height: 100%;
+  width: auto;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.preview .imgBg{
+  margin: -7px -14px 0px -14px ;
+  background-color: var(--charcoal);
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 4px 4px 0px 0px;
+  background-color: var(--half-black);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 10px rgb(105 120 208 / 10%);
+}
+
+.preview h3{
+  margin: 7px 0px 12px 0px;
+}
+
+.greeting-metadata {
+  bottom: 9rem;
+  left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  position: absolute;  
+  color: var(--gray);
+  gap: 2px;
+  width: 100%
+}
+
+#greeting-time,
+#greeting-location {
+  font-size: 1rem;
+  color: var(--white);
+  font-size: 12px;
+  display: block;
+}
+
+.custom-tooltip-container {
+  position: fixed;
+  bottom: 20px;
+  right: 65px;
+  display: inline-block;
+  z-index: 2000;
+}
+
+@media (max-width: 1600px) {
+  #hello-text {
+    display: none;
+  }
+
+  #mid-hello{
+    text-align: center;
+    display: block;
+  }
+}
+
+@media (max-width: 1551px) {
+  .file-updated{
+    display: none;
+  }
+}
+
+@media (max-width: 1441px) {
+  #wide-loc {
+    display: none;
+  }
+
+  #thin-loc{
+    display: block;
+  }
+}
+
+@media (max-width: 921px) {
+  #hello-text{
+    display: none;
+  }
+  #mid-hello{
+    display: none;
+  }
+}
+
+@media (max-width: 881px) {
+  .file-text span {
+    font-size: .8rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+}
+
+@media (max-width: 691px) {
+  .file-text span {
+    font-size: .5rem;
+  }
+}
+
+@media (max-width: 431px) {
+  .file-text span {
+    display: none;
+  }
+  .small-file-text{
+    font-size: .7rem;
+    display: block;
+  }
+}
+
+/* Everything below here is sampled or inspired by a component from uiverse */
+
+/* From Uiverse.io by BishalSaini */ 
+.custom-tooltip-btn {
+  padding: 12px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #0041b9;
+  border: 1px solid white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 8px 15px #0041b9;
+}
+
+.custom-tooltip-btn:hover {
+  background-color: #0056b3;
+}
+
+.custom-tooltip-content {
+  position: absolute;
+  bottom: 140%;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  width: 240px;
+  background: linear-gradient(135deg, #0041b9 0%, #00b982 140%);
+  color: #fff;
+  text-align: center;
+  padding: 8px 15px 15px;
+  font-size: 14px;
+  border-radius: 15px;
+  transition: all 0.4s ease;
+  z-index: 1;
+  box-shadow: 0px 10px 20px rgba(0, 123, 255, 0.3);
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+
+.custom-tooltip-container:hover .custom-tooltip-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.custom-tooltip-arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #007bff;
+}
+
+.custom-tooltip-text {
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+
+/* From Uiverse.io by SelfMadeSystem */ 
+#main-content::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    #0000 0,
+    #0000 2px,
+    hsl(0 0 4%) 2px
+  );
+  background-size: 8px 8px;
+  --f: blur(1em) brightness(6);
+  animation: hii 10s linear infinite;
+}
+
+@keyframes hii {
+  0% {
+    backdrop-filter: var(--f) hue-rotate(0deg);
+  }
+  to {
+    backdrop-filter: var(--f) hue-rotate(360deg);
+  }
+}
+
+#main-content {
+  margin-left: var(--sidebar-width);
+  padding: 2rem;
+  height: 100%;
+  overflow-y: auto;
+  flex: 1;
+  z-index: 0;
+  position: relative;
+
+  --c: #09f;
+  background-color: #000;
+  background-image: radial-gradient(4px 100px at 0px 235px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 235px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 117.5px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 252px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 252px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 126px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 150px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 150px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 75px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 253px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 253px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 126.5px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 204px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 204px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 102px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 134px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 134px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 67px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 179px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 179px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 89.5px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 299px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 299px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 149.5px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 215px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 215px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 107.5px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 281px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 281px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 140.5px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 158px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 158px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 79px, var(--c) 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 210px, var(--c), #0000),
+    radial-gradient(4px 100px at 300px 210px, var(--c), #0000),
+    radial-gradient(1.5px 1.5px at 150px 105px, var(--c) 100%, #0000 150%);
+  background-size:
+    300px 235px,
+    300px 235px,
+    300px 235px,
+    300px 252px,
+    300px 252px,
+    300px 252px,
+    300px 150px,
+    300px 150px,
+    300px 150px,
+    300px 253px,
+    300px 253px,
+    300px 253px,
+    300px 204px,
+    300px 204px,
+    300px 204px,
+    300px 134px,
+    300px 134px,
+    300px 134px,
+    300px 179px,
+    300px 179px,
+    300px 179px,
+    300px 299px,
+    300px 299px,
+    300px 299px,
+    300px 215px,
+    300px 215px,
+    300px 215px,
+    300px 281px,
+    300px 281px,
+    300px 281px,
+    300px 158px,
+    300px 158px,
+    300px 158px,
+    300px 210px,
+    300px 210px,
+    300px 210px;
+  animation: hi 150s linear infinite;
+}
+
+@keyframes hi {
+  0% {
+    background-position:
+      0px 220px,
+      3px 220px,
+      151.5px 337.5px,
+      25px 24px,
+      28px 24px,
+      176.5px 150px,
+      50px 16px,
+      53px 16px,
+      201.5px 91px,
+      75px 224px,
+      78px 224px,
+      226.5px 350.5px,
+      100px 19px,
+      103px 19px,
+      251.5px 121px,
+      125px 120px,
+      128px 120px,
+      276.5px 187px,
+      150px 31px,
+      153px 31px,
+      301.5px 120.5px,
+      175px 235px,
+      178px 235px,
+      326.5px 384.5px,
+      200px 121px,
+      203px 121px,
+      351.5px 228.5px,
+      225px 224px,
+      228px 224px,
+      376.5px 364.5px,
+      250px 26px,
+      253px 26px,
+      401.5px 105px,
+      275px 75px,
+      278px 75px,
+      426.5px 180px;
+  }
+
+  to {
+    background-position:
+      0px 6800px,
+      3px 6800px,
+      151.5px 6917.5px,
+      25px 13632px,
+      28px 13632px,
+      176.5px 13758px,
+      50px 5416px,
+      53px 5416px,
+      201.5px 5491px,
+      75px 17175px,
+      78px 17175px,
+      226.5px 17301.5px,
+      100px 5119px,
+      103px 5119px,
+      251.5px 5221px,
+      125px 8428px,
+      128px 8428px,
+      276.5px 8495px,
+      150px 9876px,
+      153px 9876px,
+      301.5px 9965.5px,
+      175px 13391px,
+      178px 13391px,
+      326.5px 13540.5px,
+      200px 14741px,
+      203px 14741px,
+      351.5px 14848.5px,
+      225px 18770px,
+      228px 18770px,
+      376.5px 18910.5px,
+      250px 5082px,
+      253px 5082px,
+      401.5px 5161px,
+      275px 6375px,
+      278px 6375px,
+      426.5px 6480px;
+  }
+}

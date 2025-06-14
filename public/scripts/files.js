@@ -27,6 +27,7 @@ fetch('/data/files.json')
     if (!container) return;
 
     container.innerHTML = files.map(file => `
+        <p class="small-file-text">${file.name}:</p>
         <a class="file-card" href="${file.path}" target="_blank">
             <i class="${file.icon}"></i>
             <div class="file-text">
