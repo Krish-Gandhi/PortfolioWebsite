@@ -45,4 +45,4 @@ def increment_views(slug, request: Request):
 @app.get("/user-count")
 def increment_views():
     response = supabase.rpc("get_user_count").execute()
-    return response.data
+    return response.data[0]

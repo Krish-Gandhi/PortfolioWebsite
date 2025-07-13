@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const terminalText = document.getElementById("terminal-text");
     const now = new Date();
     let terminalTyping = false;
+
+    fetch("https://portfolio-website-backend-pmak.onrender.com/user-count")
+        .then(response => response.json())
+        .then(data => console.log("Ping response:", data));
+        
     const welcomeText = 
         `Hello! Welcome to my personal website. (v2.0.0)
 
