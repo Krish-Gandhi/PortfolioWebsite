@@ -13,25 +13,54 @@ document.addEventListener("DOMContentLoaded", () => {
     const terminalText = document.getElementById("terminal-text");
     const now = new Date();
     let terminalTyping = false;
+    let welcomeText = "";
 
     fetch("https://portfolio-website-backend-pmak.onrender.com/user-count")
         .then(response => response.json())
-        .then(data => console.log("Ping response:", data));
-        
-    const welcomeText = 
-        `Hello! Welcome to my personal website. (v2.0.0)
+        .then(data => {
+            const { last_hour_count, last_week_count } = data;
 
-    * Projects:         krishgandhi.dev/projects
-    * GitHub:           github.com/Krish-Gandhi
-    * LinkedIn:         linkedin.com/in/krish-gandhi12
+            welcomeText = 
+`Hello! Welcome to my personal website. (v2.0.0)
 
-    System Information:
-        - Active Users: 
-        - Total Users In The Past Week:
-        - Session start datetime: ` + now.toLocaleString() +`
+* Projects:         krishgandhi.dev/projects
+* GitHub:           github.com/Krish-Gandhi
+* LinkedIn:         linkedin.com/in/krish-gandhi12
+
+System Information:
+    - Active Users: ${last_hour_count}
+    - Total Users In The Past Week: ${last_week_count}
+    - Session start datetime: ${now.toLocaleString()}
 
 Type 'help' to begin. (HINT: type 'launch' and hit Enter to access the main page!)
 $ `;
+
+            typeText(welcomeText, () => {
+                promptStartIndex = terminalText.textContent.length;
+                enableUserTyping();
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching user counts:", error);
+
+            welcomeText = 
+`Hello! Welcome to my personal website. (v2.0.0)
+
+* Projects:         krishgandhi.dev/projects
+* GitHub:           github.com/Krish-Gandhi
+* LinkedIn:         linkedin.com/in/krish-gandhi12
+
+System Information:
+    - Session start datetime: ${now.toLocaleString()}
+
+Type 'help' to begin. (HINT: type 'launch' and hit Enter to access the main page!)
+$ `;
+
+        typeText(welcomeText, () => {
+            promptStartIndex = terminalText.textContent.length;
+            enableUserTyping();
+        });
+    });
 
     let helpText = 
     `All available commands:
@@ -51,11 +80,7 @@ $ `;
 $ `;
 
     let promptStartIndex = 0;
-
-    typeText(welcomeText, () => {
-        promptStartIndex = terminalText.textContent.length;
-        enableUserTyping();
-    });
+    fetch("https://portfolio-website-backend-pmak.onrender.com/increment/TerminalLandingPage").catch(() => {});
 
     function typeText(text, callback) {
         let index = 0;
@@ -114,6 +139,7 @@ $ `;
             case "launch":
                 terminalTyping = true;
                 runTileTransition();
+                openPost('home');
                 break;
             // case "linger":
             //     typeText(lingerText, () => {

@@ -57,28 +57,30 @@ const sortedCategories = categoriesWithMeta.sort((a, b) => a.order - b.order);
       )}
 
       <div class="previews-container">
-        {posts.map(post => (
-          <div class="preview" data-skills={post.data.skills} onclick={`openPost('${post.slug}')`}>
-            <div class="imgBg"><img src={post.data.image} alt={post.data.title} /></div>
-            <h3>{post.data.title}</h3>
-            <h4>Last Updated: {post.data.pubDate}</h4>
-            {Array.isArray(post.data.skills) && post.data.skills.length > 0 && (
-              <div class="skill-icons">
-                {post.data.skills
-                  .filter(skill => !topicSkills.includes(skill))
-                  .map(skill => (
-                    <img 
-                      src={`/svgs/${skill}.svg`} 
-                      alt={skill} 
-                      title={skill} 
-                      class="skill-icon" 
-                      loading="lazy"
-                    />
-                ))}
-              </div>
-            )}
-            <p>{post.data.description}</p>
-          </div>
+        {posts
+          .filter(post => post.data.title !== "Error 404: Page Not Found")
+          .map(post => (
+            <div class="preview" data-skills={post.data.skills} onclick={`openPost('${post.slug}')`}>
+              <div class="imgBg"><img src={post.data.image} alt={post.data.title} /></div>
+              <h3>{post.data.title}</h3>
+              <h4>Last Updated: {post.data.pubDate}</h4>
+              {Array.isArray(post.data.skills) && post.data.skills.length > 0 && (
+                <div class="skill-icons">
+                  {post.data.skills
+                    .filter(skill => !topicSkills.includes(skill))
+                    .map(skill => (
+                      <img 
+                        src={`/svgs/${skill}.svg`} 
+                        alt={skill} 
+                        title={skill} 
+                        class="skill-icon" 
+                        loading="lazy"
+                      />
+                  ))}
+                </div>
+              )}
+              <p>{post.data.description}</p>
+            </div>
         ))}
       </div>
     </section>

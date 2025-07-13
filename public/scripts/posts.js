@@ -1,16 +1,21 @@
 async function openPost(slug) {
   history.pushState({ slug }, "", `#${slug}`);
   const postEl = document.getElementById("show-post");
-  console.log("Printing", slug);
   if (!postEl) return;
 
   const res = await fetch(`/blog/${slug}`);
+  let html = '';
   if (!res.ok) {
-    console.error("Post not found:", slug);
-    return;
+    if(slug == 'home'){
+      fetch("https://portfolio-website-backend-pmak.onrender.com/increment/" + slug.replaceAll("/", "-")).catch(() => {});
+      return;
+    }
+    slug = 'developer-tools/error404';
+    const res2 = await fetch(`/blog/${slug}`);
+    html = await res2.text();
+  } else {
+    html = await res.text();
   }
-
-  const html = await res.text();
 
   postEl.innerHTML = `
     <div class="post-card">
@@ -24,6 +29,7 @@ async function openPost(slug) {
   `;
   postEl.classList.add("show");
   document.body.style.overflow = "hidden";
+  fetch("https://portfolio-website-backend-pmak.onrender.com/increment/" + slug.replaceAll("/", "-")).catch(() => {});
 }
 
 function closePost() {
@@ -32,6 +38,7 @@ function closePost() {
         postEl.classList.remove("show");
         postEl.innerHTML = "";
         document.body.style.overflow = "hidden";
-        history.pushState({}, "", window.location.pathname);
+        let slug = 'home';
+        history.pushState({ slug }, "", `#${slug}`);
     }
 }
