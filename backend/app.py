@@ -4,9 +4,6 @@ from fastapi import Request
 import os
 from supabase import create_client
 
-from dotenv import load_dotenv
-load_dotenv()
-
 app = FastAPI()
 
 app.add_middleware(
@@ -20,6 +17,12 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+@app.get("/ping")
+def ping():
+    return {
+        "pong": 0
+    }
 
 @app.get("/get-views")
 def get_data():
