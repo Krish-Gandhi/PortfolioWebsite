@@ -1,21 +1,82 @@
 ---
 import { getCollection } from 'astro:content';
-const blogPosts = await getCollection('blog');
+import fs from 'fs/promises';
+import path from 'path';
 
-const categories = [...new Set(blogPosts.map(post => post.id.split('/')[0]))];
+const blogPosts = await getCollection('blog');
+const rawCategories = [...new Set(blogPosts.map(post => post.id.split('/')[0]))];
+
+async function getCategoryMeta(category) {
+  try {
+    const data = await fs.readFile(
+      path.join(import.meta.env.SITE ?? '', 'src/content/blog', category, 'metadata.json'),
+      'utf-8'
+    );
+    return JSON.parse(data);
+  } catch {
+    return {order: Infinity};
+  }
+}
+
+const categoriesWithMeta = await Promise.all(
+  rawCategories.map(async (category) => {
+    const meta = await getCategoryMeta(category);
+    return { category, order: meta.order ?? Infinity, meta };
+  })
+);
+
+const sortedCategories = categoriesWithMeta.sort((a, b) => a.order - b.order);
 ---
 
 
-{categories.map(category => {
-  const posts = blogPosts.filter(p => p.id.startsWith(category));
+{sortedCategories.map(({ category, meta }) => {
+  const posts = blogPosts
+    .filter(p => p.id.startsWith(category))
+    .sort((a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate));
+  const topicSkills = meta.tags?.find(tag => tag.title === "Topic")?.skill ?? [];
   return (
     <section>
       <h2 style="margin: 10px 0px 5px 7px;">{category}</h2>
+
+      {meta.tags && (
+        <div class="filter-container">
+          {meta.tags.map((tagGroup, idx) => (
+            <div>
+              <select id={`filter-${category}-${idx}`} class="filter-dropdown">
+                <option value=""> Filter By {tagGroup.title}</option>
+                {tagGroup.skill.map(skill => (
+                  <option value={skill}>{skill}</option>
+                ))}
+              </select>
+            </div>
+          ))}
+          <button type="button" class="clear-filters">
+            Clear Filters
+          </button>
+        </div>
+      )}
+
       <div class="previews-container">
         {posts.map(post => (
-          <div class="preview" onclick={`openPost('${post.slug}')`}>
+          <div class="preview" data-skills={post.data.skills} onclick={`openPost('${post.slug}')`}>
             <div class="imgBg"><img src={post.data.image} alt={post.data.title} /></div>
             <h3>{post.data.title}</h3>
+            <h4>Last Updated: {post.data.pubDate}</h4>
+            {Array.isArray(post.data.skills) && post.data.skills.length > 0 && (
+              <div class="skill-icons">
+                {post.data.skills
+                  .filter(skill => !topicSkills.includes(skill))
+                  .map(skill => (
+                    <img 
+                      src={`/svgs/${skill}.svg`} 
+                      alt={skill} 
+                      title={skill} 
+                      class="skill-icon" 
+                      loading="lazy"
+                    />
+                ))}
+              </div>
+            )}
             <p>{post.data.description}</p>
           </div>
         ))}
@@ -24,3 +85,52 @@ const categories = [...new Set(blogPosts.map(post => post.id.split('/')[0]))];
   );
 })}
 
+
+<script is:inline>
+document.querySelectorAll('section').forEach(section => {
+  const dropdowns = section.querySelectorAll('.filter-dropdown');
+  const clearButton = section.querySelector('.clear-filters');
+
+  function updateFilters() {
+    const selectedSkills = Array.from(dropdowns)
+      .map(d => d.value)
+      .filter(Boolean);
+
+    const previews = section.querySelectorAll('.preview');
+    previews.forEach(preview => {
+      const skillsAttr = preview.getAttribute('data-skills');
+      const skills = skillsAttr
+        ? skillsAttr.split(',').map(skill => skill.trim()).filter(Boolean)
+        : [];
+
+      if (selectedSkills.length === 0) {
+        preview.style.display = '';
+      } else if (skills.some(skill => selectedSkills.includes(skill))) {
+        preview.style.display = '';
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+  }
+
+  dropdowns.forEach(dropdown => {
+    dropdown.addEventListener('change', updateFilters);
+  });
+
+  if (clearButton) {
+    clearButton.addEventListener('click', () => {
+      dropdowns.forEach(d => d.value = '');
+      updateFilters();
+    });
+  }
+});
+</script>
+
+<!-- 
+ACCEPTABLE DATES:
+"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+Aug 12, 2131
+Mar 29, 2402 
+-->
+
+<!-- Icons from https://simpleicons.org/ -->

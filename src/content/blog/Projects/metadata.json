@@ -1,0 +1,33 @@
+{
+    "order": 1,
+    "tags": [ 
+        {
+            "title": "Topic",
+            "skill": ["AI/ML", "Embedded Systems/SoC", "Back-End/Cloud Development",  "Networking", "Front End Development"]
+        },
+        {
+            "title": "Programming Languages",
+            "skill": ["Python", "Go", "Rust", "C++", "C", "JavaScript", "HTML", "Assembly", "SystemVerilog"]
+        },
+        {
+            "title": "Cloud Provider/Service",
+            "skill": ["AWS", "GCP"]
+        },
+        {
+            "title": "DevOps",
+            "skill": ["Terraform", "Kubernetes", "Docker", "GitHub Actions", "Jenkins"]
+        },
+        {
+            "title": "Databases",
+            "skill": ["Snowflake", "MongoDB"]
+        },
+        {
+            "title": "Frameworks - Machine Learning",
+            "skill": ["PyTorch", "TensorFlow"]
+        },
+        {
+            "title": "Frameworks - Front-End",
+            "skill": ["React", "Astro"]
+        }
+    ]
+}

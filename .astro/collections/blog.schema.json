@@ -16,6 +16,12 @@
         "image": {
           "type": "string"
         },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "$schema": {
           "type": "string"
         }

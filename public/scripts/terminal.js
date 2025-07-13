@@ -1,4 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const hash = window.location.hash;
+    if (hash) {
+        const slug = hash.substring(1);
+        document.getElementById("cli-container").style.display = "none";
+        document.getElementById("tile-overlay").style.display = "none";
+        document.getElementById("ui-container").style.display = "block";
+        
+        openPost(slug);
+        return;
+    }
+
     const terminalText = document.getElementById("terminal-text");
     const now = new Date();
     let terminalTyping = false;
@@ -11,10 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     System Information:
         - Active Users: 
-        - Total Users This Month:
+        - Total Users In The Past Week:
         - Session start datetime: ` + now.toLocaleString() +`
 
-Type 'help' to begin.
+Type 'help' to begin. (HINT: type 'launch' and hit Enter to access the main page!)
 $ `;
 
     let helpText = 
@@ -23,6 +34,7 @@ $ `;
     clear       - clear terminal history
     help        - show all commands
     launch      - continue to UI version of website 
+Coming soon:
     linger      - continue to CLI version of website (for the psychopaths)
 $ `;
 
@@ -98,11 +110,11 @@ $ `;
                 terminalTyping = true;
                 runTileTransition();
                 break;
-            case "linger":
-                typeText(lingerText, () => {
-                    promptStartIndex = terminalText.textContent.length;
-                });
-                break;
+            // case "linger":
+            //     typeText(lingerText, () => {
+            //         promptStartIndex = terminalText.textContent.length;
+            //     });
+            //     break;
             default:
                 terminalText.textContent += "Unknown command: '" + command + "'";
                 terminalText.textContent += "\nFor a list of all known commands, type 'help'.";

@@ -1,3 +1,9 @@
+# Python stuff
+backend/__pycache__
+backend/.venv
+backend/.env
+backend/passwords.txt
+
 # Logs
 logs
 *.log
