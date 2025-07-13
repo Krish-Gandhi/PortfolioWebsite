@@ -26,6 +26,13 @@ import BlogSection from "../components/BlogSection.astro";
   <body>
     <div id="cli-container">
       <p><span id="terminal-text"></span><span id="caret"></span></p>
+      <div class="custom-tooltip-container">
+        <button class="custom-tooltip-btn">Need Help?</button>
+        <div class="custom-tooltip-content">
+          <span class="custom-tooltip-arrow"></span>
+          <p class="custom-tooltip-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec lacinia nibh. Phasellus non ante lacus. Sed bibendum varius malesuada. Quisque at neque mi. Maecenas.</p>
+        </div>
+      </div>
       <script src="/scripts/terminal.js" defer></script>
     </div>
 
@@ -57,18 +64,10 @@ import BlogSection from "../components/BlogSection.astro";
       <div id="main-content" style="padding: 2px 0px 28px 24px;">
         <BlogSection />
       </div>
-      <div class="custom-tooltip-container">
-        <button class="custom-tooltip-btn">Need Help?</button>
-        <div class="custom-tooltip-content">
-          <span class="custom-tooltip-arrow"></span>
-          <p class="custom-tooltip-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec lacinia nibh. Phasellus non ante lacus. Sed bibendum varius malesuada. Quisque at neque mi. Maecenas.</p>
-        </div>
-      </div>
     </div>
     <div id="show-post">
 
     </div> 
-    
     <script src="/scripts/posts.js" defer></script>
     <div id="tile-overlay"></div>
   </body>
