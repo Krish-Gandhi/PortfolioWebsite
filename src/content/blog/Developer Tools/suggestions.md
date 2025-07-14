@@ -11,18 +11,65 @@ If you are a recruiter or a person in industry and you are interested in hiring 
 
 I am a hardworker and a quick learner, so feel free to make the project as challenging as you want and include any technologies you are looking for, even if I don't have any experience with them. Thanks!
 
-fetch("https://portfolio-website-backend-pmak.onrender.com/send-suggestion", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    name: "Krish Gandhi",
-    company: "My Portfolio",
-    title: "Feedback on CLI",
-    request: "Love the terminal but would like to see themes!"
-  })
-})
-.then(res => res.json())
-.then(console.log)
-.catch(console.error);
+<form id="suggestion-form">
+  <label>
+    Name:
+    <input type="text" name="name" required />
+  </label><br><br>
+
+  <label>
+    Company:
+    <input type="text" name="company" required />
+  </label><br><br>
+
+  <label>
+    Email:
+    <input type="text" name="email" required />
+  </label><br><br>
+
+  <label>
+    Title:
+    <input type="text" name="title" required />
+  </label><br><br>
+
+  <label>
+    Project Request:
+    <textarea name="request" rows="4" required></textarea>
+  </label><br><br>
+
+  <button type="submit">Send Suggestion</button>
+  <p id="response-message" style="margin-top: 10px;"></p>
+</form>
+
+<script is:inline>
+  const form = document.getElementById("suggestion-form");
+  const responseMessage = document.getElementById("response-message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("https://portfolio-website-backend-pmak.onrender.com/send-suggestion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await res.json();
+      if (result.status === "success") {
+        responseMessage.textContent = "✅ Suggestion sent successfully!";
+        responseMessage.style.color = "green";
+        form.reset();
+      } else {
+        throw new Error(result.detail || "Unknown error");
+      }
+    } catch (err) {
+      responseMessage.textContent = "❌ Failed to send suggestion.";
+      responseMessage.style.color = "red";
+      console.error(err);
+    }
+  });
+</script>

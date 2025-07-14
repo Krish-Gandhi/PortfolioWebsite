@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import Request
+from fastapi import Request, Body
 from pydantic import BaseModel
 import requests
 import os
@@ -58,10 +58,10 @@ class Suggestion(BaseModel):
     title: str
     request: str
 
-@app.get("/send-suggestion")
+@app.post("/send-suggestion")
 def send_suggestion(payload: Suggestion):
     content = (
-        f"## Suggestion Received"
+        f"## Suggestion Received\n"
         f"**Name:** {payload.name}\n"
         f"**Email:** {payload.email}\n"
         f"**Company:** {payload.company}\n"
@@ -70,5 +70,4 @@ def send_suggestion(payload: Suggestion):
     )
 
     response = requests.post(SUGGESTION_WEBHOOK_URL, json={"content": content})
-    return response.data
-
+    return {"status": response.status_code, "detail": "Sent"}
