@@ -68,6 +68,6 @@ def send_suggestion(payload: Suggestion):
         f"**Title:** {payload.title}\n"
         f"**Request:** {payload.request}"
     )
-
+    print("got here")
     response = requests.post(SUGGESTION_WEBHOOK_URL, json={"content": content})
     return {"status": response.status_code, "detail": "Sent"}
