@@ -26,7 +26,7 @@ def ping():
 
 @app.get("/get-views")
 def get_data():
-    total = supabase.table("Engagement").select("*").execute()
+    total = supabase.table("Engagement").select("*").order("views", desc=True).execute()
     prevWeek = supabase.rpc("get_prev_week_views").execute()
     return {
         "views": total.data,

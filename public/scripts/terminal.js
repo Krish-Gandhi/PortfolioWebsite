@@ -1,19 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const hash = window.location.hash;
-    if (hash) {
-        const slug = hash.substring(1);
-        document.getElementById("cli-container").style.display = "none";
-        document.getElementById("tile-overlay").style.display = "none";
-        document.getElementById("ui-container").style.display = "block";
-        
-        openPost(slug);
-        return;
-    }
+function routeFromHash() {
+  const hash = window.location.hash;
+  if (hash) {
+    const slug = hash.substring(1);
+    document.getElementById("cli-container").style.display = "none";
+    document.getElementById("tile-overlay").style.display = "none";
+    document.getElementById("ui-container").style.display = "block";
+    openPost(slug);
+    return true;
+  }
+  return false;
+}
 
-    const terminalText = document.getElementById("terminal-text");
+let terminalText;
+let terminalTyping = false;
+let promptStartIndex = 0;
+let welcomeText = "";
+
+function handleRoute(){
+    if (routeFromHash()) return;
+
+    terminalText = document.getElementById("terminal-text");
     const now = new Date();
-    let terminalTyping = false;
-    let welcomeText = "";
 
     fetch("https://portfolio-website-backend-pmak.onrender.com/user-count")
         .then(response => response.json())
@@ -81,79 +88,81 @@ $ `;
 
     let promptStartIndex = 0;
     fetch("https://portfolio-website-backend-pmak.onrender.com/increment/TerminalLandingPage").catch(() => {});
+}
 
-    function typeText(text, callback) {
-        let index = 0;
-        terminalTyping = true;
-        const typingInterval = setInterval(() => {
-            if (index < text.length) {
-                const char = text[index] === '\n' ? '\n' : text[index];
-                terminalText.textContent += char;
-                index++;
-            } else {
-                clearInterval(typingInterval);
-                terminalTyping = false;
-                if (callback) callback();
-            }
-        }, -1);
-    }
+document.addEventListener("DOMContentLoaded", handleRoute);
+window.addEventListener("hashchange", routeFromHash);
 
-    function enableUserTyping() {
-        document.addEventListener("keydown", (event) => {
-            if (terminalTyping) return;
-            const content = terminalText.textContent;
-
-            if (event.key === "Backspace") {
-                event.preventDefault();
-                if (content.length > promptStartIndex) {
-                    terminalText.textContent = content.slice(0, -1);
-                }
-            } else if (event.key === "Enter") {
-                interpretCommand(content.slice(promptStartIndex));
-                promptStartIndex = terminalText.textContent.length;
-                window.scrollTo(0, document.body.scrollHeight);
-            } else if (event.key.length === 1) {
-                terminalText.textContent += event.key;
-            }
-        });
-    }
-
-    function interpretCommand(com){
-        const command = com.trim();
-        terminalText.textContent += "\n";
-
-        switch(command){
-            case "intro":
-                typeText(welcomeText, () => {
-                    promptStartIndex = terminalText.textContent.length;
-                });
-                break;
-            case "clear":
-                terminalText.textContent = "";
-                promptStartIndex = 0;
-                terminalText.textContent += "\$ ";
-                break;
-            case "help":
-                terminalText.textContent += helpText;
-                break;
-            case "launch":
-                terminalTyping = true;
-                runTileTransition();
-                openPost('home');
-                break;
-            // case "linger":
-            //     typeText(lingerText, () => {
-            //         promptStartIndex = terminalText.textContent.length;
-            //     });
-            //     break;
-            default:
-                terminalText.textContent += "Unknown command: '" + command + "'";
-                terminalText.textContent += "\nFor a list of all known commands, type 'help'.";
-                terminalText.textContent += "\n$ ";
+function typeText(text, callback) {
+    let index = 0;
+    terminalTyping = true;
+    const typingInterval = setInterval(() => {
+        if (index < text.length) {
+            const char = text[index] === '\n' ? '\n' : text[index];
+            terminalText.textContent += char;
+            index++;
+        } else {
+            clearInterval(typingInterval);
+            terminalTyping = false;
+            if (callback) callback();
         }
+    }, -1);
+}
+
+function enableUserTyping() {
+    document.addEventListener("keydown", (event) => {
+        if (terminalTyping) return;
+        const content = terminalText.textContent;
+
+        if (event.key === "Backspace") {
+            event.preventDefault();
+            if (content.length > promptStartIndex) {
+                terminalText.textContent = content.slice(0, -1);
+            }
+        } else if (event.key === "Enter") {
+            interpretCommand(content.slice(promptStartIndex));
+            promptStartIndex = terminalText.textContent.length;
+            window.scrollTo(0, document.body.scrollHeight);
+        } else if (event.key.length === 1) {
+            terminalText.textContent += event.key;
+        }
+    });
+}
+
+function interpretCommand(com){
+    const command = com.trim();
+    terminalText.textContent += "\n";
+
+    switch(command){
+        case "intro":
+            typeText(welcomeText, () => {
+                promptStartIndex = terminalText.textContent.length;
+            });
+            break;
+        case "clear":
+            terminalText.textContent = "";
+            promptStartIndex = 0;
+            terminalText.textContent += "\$ ";
+            break;
+        case "help":
+            terminalText.textContent += helpText;
+            break;
+        case "launch":
+            terminalTyping = true;
+            runTileTransition();
+            openPost('home');
+            break;
+        // case "linger":
+        //     typeText(lingerText, () => {
+        //         promptStartIndex = terminalText.textContent.length;
+        //     });
+        //     break;
+        default:
+            terminalText.textContent += "Unknown command: '" + command + "'";
+            terminalText.textContent += "\nFor a list of all known commands, type 'help'.";
+            terminalText.textContent += "\n$ ";
     }
-        
-});
+}
 
 function runTileTransition(callback) {
     const overlay = document.getElementById("tile-overlay");

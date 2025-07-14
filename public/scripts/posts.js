@@ -5,18 +5,53 @@ async function openPost(slug) {
 
   const res = await fetch(`/blog/${slug}`);
   let html = '';
-  if (!res.ok) {
-    if(slug == 'home'){
-      fetch("https://portfolio-website-backend-pmak.onrender.com/increment/" + slug.replaceAll("/", "-")).catch(() => {});
-      return;
-    }
-    slug = 'developer-tools/error404';
-    const res2 = await fetch(`/blog/${slug}`);
-    html = await res2.text();
-  } else {
-    html = await res.text();
-  }
 
+  if (slug === 'developer-tools/engagement') {
+    const res = await fetch('https://portfolio-website-backend-pmak.onrender.com/get-views');
+    if (res.ok) {
+      const data = await res.json();
+      const rows = data.views.map(view =>
+        `<tr><td>${view.slug}</td><td>${view.views}</td></tr>`
+      ).join("");
+
+      const hotRows = data.hot.map(view =>
+        `<tr><td>${view.slug}</td><td>${view.count}</td></tr>`
+      ).join("");
+
+       html = `
+      <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px;">
+          <h2 style="text-align: center;">Total Views Per Page</h2>
+          <table border="1" cellpadding="6">
+            <thead><tr><th>Slug</th><th>Total Views</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+          <h2 style="text-align: center;">Trending</h2>
+          <table border="1" cellpadding="6">
+            <thead><tr><th>Slug</th><th>View Count (Past Week)</th></tr></thead>
+            <tbody>${hotRows}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+    } else {
+      html = `<p>Failed to load engagement data.</p>`;
+    }
+   } else {
+    if (!res.ok) {
+      if(slug == 'home'){
+        fetch("https://portfolio-website-backend-pmak.onrender.com/increment/" + slug.replaceAll("/", "-")).catch(() => {});
+        return;
+      }
+      slug = 'developer-tools/error404';
+      const res2 = await fetch(`/blog/${slug}`);
+      html = await res2.text();
+    } else {
+      html = await res.text();
+    }
+  }
   postEl.innerHTML = `
     <div class="post-card">
         <button class="post-card-exit-button" onclick="closePost()">
