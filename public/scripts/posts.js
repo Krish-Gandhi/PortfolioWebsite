@@ -77,3 +77,36 @@ function closePost() {
         history.pushState({ slug }, "", `#${slug}`);
     }
 }
+
+async function submitForm(e) {
+  console.log("MADE IT");
+  e.preventDefault();
+
+  const form = document.getElementById("suggestion-form");
+  const responseMessage = document.getElementById("response-message");
+  const formData = new FormData(form);
+  const payload = Object.fromEntries(formData.entries());
+
+  try {
+    const res = await fetch("https://portfolio-website-backend-pmak.onrender.com/send-suggestion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await res.json();
+    console.log("Sent payload", payload);
+
+    if (res.ok) {
+      responseMessage.textContent = "Suggestion sent successfully!";
+      responseMessage.style.color = "green";
+      form.reset();
+    } else {
+      throw new Error(result.detail || "Unknown error");
+    }
+  } catch (err) {
+    responseMessage.textContent = "Failed to send suggestion.";
+    responseMessage.style.color = "red";
+    console.error(err);
+  }
+}

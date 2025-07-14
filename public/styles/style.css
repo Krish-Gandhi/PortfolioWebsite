@@ -629,6 +629,79 @@ p {
   }
 }
 
+#suggestion-form {
+  max-width: 80%;
+  margin: 30px auto;
+  background-color: var(--background);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--teal);
+  font-family: sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+#suggestion-form label {
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+#suggestion-form input,
+#suggestion-form textarea {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--dark-gray);
+  border-radius: 5px;
+  background-color: var(--charcoal);
+  color: #fff;
+  font-size: 0.9rem;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#suggestion-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+#suggestion-form button {
+  background-color: var(--teal);
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background 0.3s ease;
+  align-self: flex-start;
+  
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#suggestion-form button:hover {
+  background-color: var(--teal);
+}
+
+#response-message {
+  margin-top: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#response-message.success {
+  color: var(--teal);
+}
+
+#response-message.error {
+  color: var(--red);
+}
+
 /* Everything below here is sampled or inspired by a component from uiverse */
 
 /* From Uiverse.io by BishalSaini */ 
