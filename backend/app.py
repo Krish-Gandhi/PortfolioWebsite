@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
+from pydantic import BaseModel
+import requests
 import os
 from supabase import create_client
 
@@ -15,6 +17,7 @@ app.add_middleware(
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
+SUGGESTION_WEBHOOK_URL = os.environ.get("SUGGESTION_WEBHOOK_URL");
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
@@ -46,3 +49,26 @@ def increment_views(slug, request: Request):
 def increment_views():
     response = supabase.rpc("get_user_count").execute()
     return response.data[0]
+
+
+class Suggestion(BaseModel):
+    name: str
+    email: str
+    company: str
+    title: str
+    request: str
+
+@app.get("/send-suggestion")
+def send_suggestion(payload: Suggestion):
+    content = (
+        f"## Suggestion Received"
+        f"**Name:** {payload.name}\n"
+        f"**Email:** {payload.email}\n"
+        f"**Company:** {payload.company}\n"
+        f"**Title:** {payload.title}\n"
+        f"**Request:** {payload.request}"
+    )
+
+    response = requests.post(SUGGESTION_WEBHOOK_URL, json={"content": content})
+    return response.data
+
