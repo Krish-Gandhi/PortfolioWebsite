@@ -1,3 +1,20 @@
+let helpText = 
+`All available commands:
+    intro       - reprint intro message
+    clear       - clear terminal history
+    help        - show all commands
+    launch      - continue to UI version of website 
+Coming soon:
+    linger      - continue to CLI version of website (for the psychopaths)
+$ `;
+
+const lingerText = 
+`Linger protocol starting...
+(1/3) Activating CLI commands...
+(2/3) Why would you do this I worked so hard on the front end...
+(3/3) Joking, enjoy...
+$ `;
+
 function routeFromHash() {
   const hash = window.location.hash;
   if (hash) {
@@ -68,25 +85,6 @@ $ `;
             enableUserTyping();
         });
     });
-
-    let helpText = 
-    `All available commands:
-    intro       - reprint intro message
-    clear       - clear terminal history
-    help        - show all commands
-    launch      - continue to UI version of website 
-Coming soon:
-    linger      - continue to CLI version of website (for the psychopaths)
-$ `;
-
-    const lingerText = 
-    `Linger protocol starting...
-(1/3) Activating CLI commands...
-(2/3) Why would you do this I worked so hard on the front end...
-(3/3) Joking, enjoy...
-$ `;
-
-    let promptStartIndex = 0;
     fetch("https://portfolio-website-backend-pmak.onrender.com/increment/TerminalLandingPage").catch(() => {});
 }
 
