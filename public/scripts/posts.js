@@ -79,7 +79,7 @@ function closePost() {
 }
 
 async function submitForm(e) {
-  console.log("MADE IT");
+  // console.log("MADE IT");
   e.preventDefault();
 
   const form = document.getElementById("suggestion-form");

@@ -17,12 +17,18 @@ $ `;
 
 function routeFromHash() {
   const hash = window.location.hash;
-  if (hash) {
-    const slug = hash.substring(1);
+  const isSmallScreen = window.innerWidth <= 992;
+
+  if (hash || isSmallScreen) {
     document.getElementById("cli-container").style.display = "none";
     document.getElementById("tile-overlay").style.display = "none";
     document.getElementById("ui-container").style.display = "block";
-    openPost(slug);
+    
+    if (hash){
+        const slug = hash.substring(1);
+        openPost(slug);
+    }
+    
     return true;
   }
   return false;
