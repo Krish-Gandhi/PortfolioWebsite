@@ -3,7 +3,13 @@
     "tags": [ 
         {
             "title": "Topic",
-            "skill": ["Infrastructure", "Networking", "Media", "Misc"]
+            "skill": [
+                "Infrastructure", 
+                "Networking", 
+                "Development", 
+                "Media", 
+                "Misc"
+            ]
         }
     ]
 }

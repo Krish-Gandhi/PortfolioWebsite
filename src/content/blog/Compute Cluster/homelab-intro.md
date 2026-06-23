@@ -26,7 +26,7 @@ When this grant money eventually runs out, the rest of the funds will come direc
 
 ### Compute Nodes
 
-#### <u>ACEMAGICIAN Kron Mini K1 Mini PC</u> - Quantity: 2 | Purchased: Dec 2025 | Price: $350 | <a href="https://www.amazon.com/dp/B0C9J69KH8?ref_=cm_sw_r_cso_cp_apan_dp_AR0XZVH8A1E0V8KCD6JR" target="_blank" rel="noopener noreferrer">Link</a>
+#### <u>ACEMAGICIAN Kron Mini K1 Mini PC</u> - Quantity: 2 | Purchased: Dec 2025 | Price: $309 | <a href="https://www.amazon.com/dp/B0C9J69KH8?ref_=cm_sw_r_cso_cp_apan_dp_AR0XZVH8A1E0V8KCD6JR" target="_blank" rel="noopener noreferrer">Link</a>
 
 These Mini PCs by ACEMAGICIAN are actually pretty impressive. The ones I have use an AMD Ryzen 7 5825U with Radeon Graphics and each have 32 GBs RAM and 512 GBs of storage. They're relatively quiet, too. At the price I paid, it was a steal. I run NixOS on these and have had no issues with installation/storage/network cards/etc.
 
