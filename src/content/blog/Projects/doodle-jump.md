@@ -23,7 +23,6 @@ For the final project, I implemented a simplified version of Doodle Jump on an <
 ---
 
 ### Notes
-- Even though this was a partner class, my partner did not contribute to anything in this class from about Week 4 to the end. He didn't download the given files from the 5th lab on, and did not make a single contribution to this final project.
 - This final project was built as an extension of the 6th lab in this course, so I have attached the lab report for both Lab 6 and the Final Project. To see all the design decisions I made, look through these reports.
 
 ### Lab Reports

@@ -14,7 +14,7 @@ skills: ["Infrastructure", "Networking", "Media", "Misc"]
 
 ## Funding
 
-The initial funding for this project came from a grant I was awarded during undergrad. I received the Compall Family Scholarship from the ECE department at the University of Illinois Urbana-Champaign. I want to give huge thank you to the Compall family for this generous gift! 
+The initial funding for this project came from a grant I was awarded during undergrad. I received the Compall Family Scholarship from the ECE department at the University of Illinois Urbana-Champaign. I want to give a big thank you to the Compall family for this generous gift! 
 
 When this grant money eventually runs out, the rest of the funds will come directly from my pocket.
 
@@ -41,4 +41,4 @@ There wasn't much thought that went into buying this. I saw it on Craigslist and
 
 #### <u>D-LINK 24-Port 10/100/1000 Unmanaged Gigabit Switch</u> - Quantity: 1 | Purchased: Unsure | Price: N/A | <a href="https://www.newtownspares.com/dgs-1024a/?adgroupid=169409694718&device=m&adposition=&keyword=&network=g" target="_blank" rel="noopener noreferrer">Link</a>
 
-I just found this laying around in my basement and figured I could use it speed up the data transfer between nodes. After plugging it in, I quickly tested it and it does what its supposed to. 10/10 no notes.
+I just found this laying around in my basement and figured I could use it to speed up the data transfer between nodes. After plugging it in, I quickly tested it and it does what its supposed to. 10/10 no notes.
